@@ -2,6 +2,7 @@
 #include "utility/xml/Parser.h"
 #include "utility/json/Parser.h"
 #include "utility/ini/IniFile.h"
+#include "utility/logger/Logger.h"
 
 using namespace crab;
 
@@ -33,5 +34,8 @@ int main() {
     ini_file.load_file("../utility/ini/test.ini");
     ini_file.show();
 
+    std::cout<<"===============test logger==============="<<std::endl;
+    crab::logger::Logger::instance()->open("../test_logger.log");
+    debug("test logger");
     return 0;
 }
