@@ -2,8 +2,8 @@
 // Created by cepher on 5/7/23.
 //
 
-#ifndef CRAB_HPF_PARSER_H
-#define CRAB_HPF_PARSER_H
+#ifndef CRAB_HPF_XML_PARSER_H
+#define CRAB_HPF_XML_PARSER_H
 
 #include <string>
 #include <vector>
@@ -22,11 +22,10 @@ namespace crab {
             //加载 XML 文件
             void load_file(const std::string &filename);
 
-            void skip_white_spaces();
-
             Element parse(bool is_child=false);
 
         private:
+            void skip_white_spaces();
             bool parse_declaration();
             bool parse_comment();
             std::string parse_element_name();
@@ -39,6 +38,6 @@ namespace crab {
 
         };
 
-#endif //CRAB_HPF_PARSER_H
     }
 }
+#endif //CRAB_HPF_XML_PARSER_H

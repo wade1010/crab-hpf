@@ -62,8 +62,6 @@ namespace crab {
             std::map<std::string,std::string> m_attrs;
 
         };
-
-
-#endif //CRAB_HPF_ELEMENT_H
     }
 }
+#endif //CRAB_HPF_ELEMENT_H
