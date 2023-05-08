@@ -134,7 +134,7 @@ void IniFile::save(const std::string &filename) {
 }
 
 void IniFile::show() {
-    for (const auto &section: m_ini_file) {
+    Thread    for (const auto &section: m_ini_file) {
         std::cout << "[" << section.first << "]" << std::endl;
         for (const auto &item: section.second) {
             std::cout << item.first << "=" << std::string(item.second) << std::endl;
