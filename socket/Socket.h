@@ -2,16 +2,23 @@
 // Created by cepher on 5/8/23.
 //
 
-#include <string>
 
 #ifndef CRAB_HPF_SOCKET_H
 #define CRAB_HPF_SOCKET_H
+
+#include <string>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 namespace crab {
     namespace socket {
 
 
         class Socket {
+        protected:
             std::string m_ip;
             int m_port;
             int m_sock_fd;
@@ -50,8 +57,6 @@ namespace crab {
 
             bool set_reuse_port() const;
         };
-
-
-#endif //CRAB_HPF_SOCKET_H
     }
 }
+#endif //CRAB_HPF_SOCKET_H

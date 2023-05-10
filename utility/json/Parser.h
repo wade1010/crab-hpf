@@ -22,16 +22,21 @@ namespace crab {
 
         private:
             void skip_white_spaces();
+
             char get_next_char();
 
             Json parse_null();
+
             Json parse_bool();
+
             Json parse_number();
+
             Json parse_string();
 
-            static bool in_range(long x,long lower,long upper){
+            static bool in_range(long x, long lower, long upper) {
                 return x >= lower && x <= upper;
             }
+
         private:
             std::string m_str;
             size_t m_idx;

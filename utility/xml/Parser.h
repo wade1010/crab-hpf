@@ -22,15 +22,21 @@ namespace crab {
             //加载 XML 文件
             void load_file(const std::string &filename);
 
-            Element parse(bool is_child=false);
+            Element parse(bool is_child = false);
 
         private:
             void skip_white_spaces();
+
             bool parse_declaration();
+
             bool parse_comment();
+
             std::string parse_element_name();
+
             std::string parse_element_text();
+
             std::string parse_element_attr_key();
+
             std::string parse_element_attr_value();
 
             std::string m_str;

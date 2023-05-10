@@ -9,23 +9,26 @@
 
 namespace crab {
     namespace thread {
-class Task {
-    Task();
-    Task(void * data);
-    virtual ~Task();
+        class Task {
+        public:
+            Task();
 
-    void * get_data();
-    void set_data(void * data);
+            Task(void *data);
 
-    virtual void run() = 0;
+            virtual ~Task();
 
-    virtual void destroy() = 0;
-protected:
-    void * m_data;
-    Mutex m_mutex;
-};
+            void *get_data();
 
+            void set_data(void *data);
 
-#endif //CRAB_HPF_TASK_H
+            virtual void run() = 0;
+
+            virtual void destroy() = 0;
+
+        protected:
+            void *m_data;
+            Mutex m_mutex;
+        };
     }
 }
+#endif //CRAB_HPF_TASK_H

@@ -3,6 +3,7 @@
 //
 #ifndef CRAB_HPF_THREAD_H
 #define CRAB_HPF_THREAD_H
+
 #include "Task.h"
 #include "Condition.h"
 
@@ -12,22 +13,29 @@ namespace crab {
         class Thread {
         public:
             Thread();
+
             virtual ~Thread();
-            virtual void run()=0;
+
+            virtual void run() = 0;
+
             void start();
+
             static void stop();
-            void set_task(Task * task);
-            Task * get_task();
+
+            void set_task(Task *task);
+
+            Task *get_task();
+
         protected:
-            static void * thread_func(void *ptr);
-        private:
-            pthread_t  m_tid;
-            Task * m_task;
+            static void *thread_func(void *ptr);
+
+        protected:
+            pthread_t m_tid;
+            Task *m_task;
             Mutex m_mutex;
             Condition m_cond;
         };
 
-
-#endif //CRAB_HPF_THREAD_H
     }
 }
+#endif //CRAB_HPF_THREAD_H

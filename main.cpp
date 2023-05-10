@@ -3,10 +3,19 @@
 #include "utility/json/Parser.h"
 #include "utility/ini/IniFile.h"
 #include "utility/logger/Logger.h"
+#include "utility/Singleton.h"
+#include "server/Server.h"
 
 using namespace crab;
 
 int main() {
+    std::cout<<"===============test server==============="<<std::endl;
+    auto serv = Singleton<server::Server>::instance();
+    serv->set_threads(1000);
+    serv->set_connects(10000);
+    serv->set_wait_time(10);
+    serv->listen("0.0.0.0", 8080);
+    serv->start();
     //xml
     std::cout<<"===============test xml==============="<<std::endl;
     crab::xml::Parser xml_parser;

@@ -1,10 +1,9 @@
 //
 // Created by cepher on 5/8/23.
 //
-namespace crab {
 #ifndef CRAB_HPF_SINGLETON_H
 #define CRAB_HPF_SINGLETON_H
-
+namespace crab {
     template<class T>
     class Singleton {
 
@@ -32,5 +31,5 @@ namespace crab {
     template<class T>
     T *Singleton<T>::m_instance = nullptr;
 
-#endif //CRAB_HPF_SINGLETON_H
 }
+#endif //CRAB_HPF_SINGLETON_H

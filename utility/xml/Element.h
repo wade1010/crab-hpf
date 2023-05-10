@@ -53,13 +53,13 @@ namespace crab {
 
             void clear();
 
-            std::string toString()const;
+            std::string toString() const;
 
         private:
             std::string m_name;
             std::string m_text;
             std::vector<Element> m_children;
-            std::map<std::string,std::string> m_attrs;
+            std::map<std::string, std::string> m_attrs;
 
         };
     }
