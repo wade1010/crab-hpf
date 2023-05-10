@@ -15,6 +15,6 @@ add_executable(crab_hpf
         thread/AutoLock.h thread/ThreadPool.cpp thread/ThreadPool.h thread/WorkerThread.cpp thread/WorkerThread.h
         socket/ServerSocket.cpp socket/ServerSocket.h socket/SocketHandler.cpp socket/SocketHandler.h
         utility/ObjectPool.h socket/EventPoller.cpp socket/EventPoller.h socket/ClientSocket.cpp
-        socket/ClientSocket.h)
+        socket/ClientSocket.h utility/System.cpp utility/System.h)
 
 target_link_libraries(crab_hpf ${CMAKE_THREAD_LIBS_INIT})

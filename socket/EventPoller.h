@@ -11,6 +11,7 @@ namespace crab {
     namespace socket {
 
         class EventPoller {
+            friend  class SocketHandler;
         public:
             /**
              * 构造函数

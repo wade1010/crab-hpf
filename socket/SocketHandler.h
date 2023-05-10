@@ -26,11 +26,11 @@ namespace crab {
 
             void remove(Socket *socket1);
 
-            void handle(size_t max_connections, size_t wait_time);
+            void handle(int max_connections, int wait_time);
 
         private:
-            EventPoller *m_poll;
-            Socket *m_socket;
+            EventPoller *m_epoll;
+            Socket *m_server;
             ObjectPool<Socket> m_socket_pool;
             Mutex m_mutex;
         };

@@ -16,8 +16,8 @@
 namespace crab {
     namespace socket {
 
-
         class Socket {
+            friend class SocketHandler;
         protected:
             std::string m_ip;
             int m_port;

@@ -23,6 +23,7 @@ void Server::listen(const std::string &ip, int port) {
 
 void Server::start() {
     crab::Singleton<TaskDispatcher>::instance()->init(m_threads_num);
+
     auto socket_handler = Singleton<SocketHandler>::instance();
     socket_handler->listen(m_ip, m_port);
     socket_handler->handle(m_connection_num, m_wait_time);
