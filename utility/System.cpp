@@ -34,13 +34,11 @@ namespace crab {
         ini->load_file(get_root_path() + "/config/dev.ini");
 
 
-
     }
 
     std::string System::get_root_path() {
         if (!m_root_path.empty())
             return m_root_path;
-
         // 获取程序所在的绝对路径
         char buf[1024];
         ssize_t len = ::readlink("/proc/self/exe", buf, sizeof(buf) - 1);
@@ -50,9 +48,18 @@ namespace crab {
         buf[len] = '\0';
         std::string program_path = buf;
         std::string::size_type pos = program_path.find_last_of('/');
-        if (pos == std::string::npos)
-            throw std::logic_error("get root path error");
-        m_root_path = program_path.substr(0, pos);
+        while (pos != std::string::npos) {
+            program_path = program_path.substr(0, pos);
+            std::ifstream ifs(program_path + "/CMakeLists.txt");
+            if (ifs.good()) {
+                // 找到了项目根目录
+                ifs.close();
+                break;
+            }
+            ifs.close();
+            pos = program_path.find_last_of('/');
+        }
+        m_root_path = program_path;
         return m_root_path;
     }
 

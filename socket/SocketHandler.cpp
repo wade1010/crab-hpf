@@ -2,11 +2,16 @@
 // Created by cepher on 5/10/23.
 //
 
+#include <iostream>
 #include "SocketHandler.h"
 #include "../utility/logger/Logger.h"
+#include "../utility/Singleton.h"
+#include "../task/TaskFactory.h"
+#include "../thread/TaskDispatcher.h"
 
 using namespace crab::socket;
 using namespace crab::logger;
+using namespace crab::task;
 
 SocketHandler::SocketHandler() = default;
 
@@ -23,6 +28,7 @@ SocketHandler::~SocketHandler() {
 
 void SocketHandler::listen(const std::string &ip, int port) {
     m_server = new Socket(ip, port);
+    std::cout << "listen at http://" << ip << ":" << port << std::endl;
 }
 
 void SocketHandler::attach(Socket *socket) {
@@ -73,13 +79,14 @@ void SocketHandler::handle(int max_connections, int wait_time) {
                     detach(socket);
                     remove(socket);
                 } else if (events & EPOLLERR) {
-                    error("socket %d error.", socket->m_sockfd);
+                    error("socket %d error.", socket->m_sock_fd);
                     detach(socket);
                     remove(socket);
                 } else if (events & EPOLLIN) {
                     debug("socket read event");
                     detach(socket);
-                    //todo task
+                    auto *task = TaskFactory::create(socket);
+                    Singleton<TaskDispatcher>::instance()->assign(task);
                 }
             }
         }
