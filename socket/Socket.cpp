@@ -67,7 +67,12 @@ bool Socket::close() {
 }
 
 int Socket::accept() const {
-    return m_sock_fd;
+    int sock_fd = ::accept(m_sock_fd, nullptr, nullptr);
+    if (sock_fd < 0) {
+        error("accept call error: errno=%d errstr=%s", errno, strerror(errno));
+        sock_fd = -1;
+    }
+    return sock_fd;
 }
 
 int Socket::recv(char *buf, int len) const {
@@ -101,7 +106,8 @@ bool Socket::set_send_buffer(size_t size) const {
 }
 
 bool Socket::set_recv_buffer(size_t size) const {
-    if (setsockopt(m_sock_fd, SOL_SOCKET, SO_RCVBUF, &size, sizeof(size)) < 0) {
+    int buf_size = size;
+    if (setsockopt(m_sock_fd, SOL_SOCKET, SO_RCVBUF, &buf_size, sizeof(buf_size)) < 0) {
         error("socket set recv buffer error: errno=%d errstr=%s", errno, strerror(errno));
         return false;
     }

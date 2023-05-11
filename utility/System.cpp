@@ -19,7 +19,7 @@ namespace crab {
     System::~System() = default;
 
     void System::init() {
-        core_dump();
+//        core_dump();
 
         const std::string &log_dir = get_root_path() + "/log";
         auto *dir = opendir(log_dir.c_str());
