@@ -9,12 +9,14 @@
 
 namespace crab {
     namespace thread {
-        class WorkerThread: public Thread{
+        class WorkerThread : public Thread {
         public:
             WorkerThread();
+
             virtual ~WorkerThread();
 
-            [[noreturn]] virtual void run();
+            virtual void run();
+
             static void cleanup(void *ptr);
         };
     }

@@ -10,11 +10,13 @@
 
 using namespace crab::thread;
 
-WorkerThread::WorkerThread() = default;
+WorkerThread::WorkerThread() : Thread(){
+
+}
 
 WorkerThread::~WorkerThread() = default;
 
-[[noreturn]] void WorkerThread::run() {
+void WorkerThread::run() {
 //    使用sigfillset函数将所有的信号添加到信号集中，
 //    并使用pthread_sigmask函数将信号集添加到线程的信号屏蔽字中，
 //    以防止在执行任务时被信号中断，确保了任务的可靠性。

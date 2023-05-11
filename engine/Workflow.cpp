@@ -25,23 +25,40 @@ namespace crab {
             xml_parser.load_file(file);
             Element root = xml_parser.parse();
             info("load workflow success: %s", file.c_str());
-            for (auto it = root.begin(); it != root.end(); it++) {
-                auto switch_flag = it->attr("switch") == "on";
+            for (auto &it: root) {
+                auto switch_flag = it.attr("switch") == "on";
                 if (!switch_flag)
                     continue;
-                auto name = it->attr("name");
+                auto name = it.attr("name");
                 Work *work = new Work();
                 work->set_name(name);
                 work->set_switch(switch_flag);
-                if (!load_plugin(work, *it))
+                if (!load_plugin(work, it))
                     return false;
                 m_works[name] = work;
             }
             return true;
         }
 
-        bool Workflow::run(const string &work, const string &input, const string &output) {
-            return false;
+        bool Workflow::run(const string &work, const string &input, string &output) {
+            auto it = m_works.find(work);
+            if (it == m_works.end()) {
+                error("work: %s is not exist!", work.c_str());
+                return false;
+            }
+            if (!it->second->get_switch()) {
+                error("work: %s is switch off!", work.c_str());
+                return false;
+            }
+
+            Context ctx;
+            ctx.ref<string>("input") = input;
+            if (!it->second->run(ctx)) {
+                error("work: %s run error!", work.c_str());
+                return false;
+            }
+            output = ctx.ref<string>("output");
+            return true;
         }
 
         bool Workflow::load_plugin(Work *work, Element &element) {

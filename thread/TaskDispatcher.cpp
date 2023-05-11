@@ -17,8 +17,8 @@ TaskDispatcher::TaskDispatcher() = default;
 TaskDispatcher::~TaskDispatcher() = default;
 
 void TaskDispatcher::init(size_t threads) {
-    Singleton<ThreadPool>::instance()->create(threads);
-    start();
+    this->start();
+    Singleton<ThreadPool>::instance()->create(int(threads));
 }
 
 void TaskDispatcher::assign(Task *task) {

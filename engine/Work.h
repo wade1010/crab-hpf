@@ -31,7 +31,7 @@ namespace crab {
 
             bool get_switch() const;
 
-            void run(Context &ctx);
+            bool run(Context &ctx);
 
         protected:
             std::string m_name;

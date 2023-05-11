@@ -45,12 +45,13 @@ namespace crab {
             return m_switch;
         }
 
-        void Work::run(Context &ctx) {
+        bool Work::run(Context &ctx) {
             for (auto p: m_plugins) {
                 if (p->get_switch())
                     if (!p->run(ctx))
                         break;
             }
+            return true;
         }
     } // engine
 }

@@ -22,7 +22,7 @@ namespace crab {
 
             bool load(const std::string &file);
 
-            bool run(const std::string &work, const std::string &input, const std::string &output);
+            bool run(const std::string &work, const std::string &input, std::string &output);
 
         private:
             bool load_plugin(Work *work, Element &element);

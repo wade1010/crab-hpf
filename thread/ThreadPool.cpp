@@ -10,7 +10,8 @@
 using namespace crab::thread;
 
 
-ThreadPool::ThreadPool() = default;
+ThreadPool::ThreadPool() : m_threads(0) {
+}
 
 ThreadPool::~ThreadPool() = default;
 
