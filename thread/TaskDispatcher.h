@@ -18,7 +18,7 @@ namespace crab {
         public:
             TaskDispatcher();
 
-            ~TaskDispatcher();
+            ~TaskDispatcher() override;
 
             void init(size_t threads);
 

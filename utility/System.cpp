@@ -83,7 +83,11 @@ namespace crab {
         ret = setrlimit(RLIMIT_CORE, &x);
 
         ret = getrlimit(RLIMIT_DATA, &x);
-        x.rlim_cur = 500000000;//500MB
+        //这个值决定了config/dev.ini里面的threads数量，我设置500000000发现创建64个线程会有失败
+        //怎么看失败呢？
+        //调用pthread_create函数时，如果返回值为11，表示创建线程失败，错误代码为EAGAIN。
+        // EAGAIN错误通常表示系统已经达到了允许创建的线程数目的上限，无法再创建新的线程。
+        x.rlim_cur = 768000000;
         ret = setrlimit(RLIMIT_DATA, &x);
     }
 } // crab

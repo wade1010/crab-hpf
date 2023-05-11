@@ -17,16 +17,16 @@ TaskDispatcher::TaskDispatcher() = default;
 TaskDispatcher::~TaskDispatcher() = default;
 
 void TaskDispatcher::init(size_t threads) {
-    this->start();
     Singleton<ThreadPool>::instance()->create(int(threads));
+    start();
 }
 
 void TaskDispatcher::assign(Task *task) {
     debug("task dispatcher assign task!");
     m_mutex.lock();
     m_task.push_back(task);
-    m_cond.signal();
     m_mutex.unlock();
+    m_cond.signal();
 }
 
 void TaskDispatcher::handle(Task *task) {
@@ -44,20 +44,23 @@ void TaskDispatcher::handle(Task *task) {
 
 void TaskDispatcher::run() {
     sigset_t mask;
-    if (sigfillset(&mask) != 0) {
+    if (0 != sigfillset(&mask))
+    {
         error("thread manager sigfillset failed!");
         return;
     }
-    if (pthread_sigmask(SIG_SETMASK, &mask, nullptr) != 0) {
+    if (0 != pthread_sigmask(SIG_SETMASK, &mask, NULL))
+    {
         error("thread manager pthread_sigmask failed!");
         return;
     }
-    while (true) {
-        info("TaskDispatcher::run");
+    while (true)
+    {
+        //debug("task list: %d", m_actions.size());
         m_mutex.lock();
         while (m_task.empty())
             m_cond.wait(&m_mutex);
-        auto task = m_task.front();
+        Task* task = m_task.front();
         m_task.pop_front();
         m_mutex.unlock();
         handle(task);

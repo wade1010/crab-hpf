@@ -13,8 +13,7 @@ void test();
 
 int main() {
 //    test();
-    auto sys = Singleton<System>::instance();
-    sys->init();
+    Singleton<System>::instance()->init();
 
     auto ini = Singleton<ini::IniFile>::instance();
     const std::string &ip = ini->get("server", "ip");

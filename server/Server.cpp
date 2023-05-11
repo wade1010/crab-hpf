@@ -26,7 +26,7 @@ void Server::start() {
 
     auto socket_handler = Singleton<SocketHandler>::instance();
     socket_handler->listen(m_ip, m_port);
-    socket_handler->handle(m_connection_num, m_wait_time);
+    socket_handler->handle(int(m_connection_num), int(m_wait_time));
 }
 
 void Server::set_threads(size_t num) {
