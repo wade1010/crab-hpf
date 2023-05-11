@@ -10,7 +10,9 @@
 #include "./logger/Logger.h"
 #include "./ini/IniFile.h"
 #include "Singleton.h"
+#include "../engine/Workflow.h"
 
+using namespace crab::engine;
 
 namespace crab {
 
@@ -19,7 +21,7 @@ namespace crab {
     System::~System() = default;
 
     void System::init() {
-//        core_dump();
+        core_dump();
 
         const std::string &log_dir = get_root_path() + "/log";
         auto *dir = opendir(log_dir.c_str());
@@ -28,12 +30,12 @@ namespace crab {
         else
             closedir(dir);
 
-        logger::Logger::instance()->open(log_dir + "/main.log");
+        logger::Logger::instance()->open(log_dir + "/server.log");
 
         auto ini = Singleton<ini::IniFile>::instance();
         ini->load_file(get_root_path() + "/config/dev.ini");
 
-
+        Singleton<Workflow>::instance()->load(get_root_path() + "/config/workflow.xml");
     }
 
     std::string System::get_root_path() {

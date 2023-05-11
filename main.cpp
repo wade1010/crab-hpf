@@ -23,7 +23,13 @@ int main() {
     int max_conn = ini->get("server", "max_conn");
     int wait_time = ini->get("server", "wait_time");
 
-    auto server=Singleton<server::Server>::instance();
+   /* if (max_conn <= threads) {
+        max_conn = threads + 1;
+        warn("max_conn is smaller than the number of threads, so change it to the number of threads:%d", threads);
+    }
+
+*/
+    auto server = Singleton<server::Server>::instance();
     server->set_threads(threads);
     server->set_connects(max_conn);
     server->set_wait_time(wait_time);

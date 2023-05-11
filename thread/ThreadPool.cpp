@@ -17,9 +17,9 @@ ThreadPool::~ThreadPool() = default;
 void ThreadPool::create(int threads) {
     AutoLock lock(&m_mutex_idle);
     m_threads = threads;
+    debug("create %d thread", m_threads);
     while (threads-- > 0) {
         Thread *thread = new WorkerThread();
-        debug("create thread %x", thread);
         m_list_idle.insert(thread);
         thread->start();
     }
@@ -51,7 +51,7 @@ void ThreadPool::move_to_busy_list(Thread *thread) {
     while (m_list_busy.size() == m_threads)
         m_cond_busy.wait(&m_mutex_busy);
     m_list_busy.insert(thread);
-    m_cond_busy.signal();
+//    m_cond_busy.signal();
     m_mutex_busy.unlock();
 
     m_mutex_idle.lock();

@@ -55,6 +55,25 @@ namespace crab {
 
             std::string toString() const;
 
+            typedef std::vector<Element>::iterator iterator;
+            typedef std::vector<Element>::const_iterator const_iterator;
+
+            iterator begin() {
+                return m_children.begin();
+            }
+
+            iterator end() {
+                return m_children.end();
+            }
+
+            const_iterator begin() const {
+                return m_children.begin();
+            }
+
+            const_iterator end() const {
+                return m_children.end();
+            }
+
         private:
             std::string m_name;
             std::string m_text;
