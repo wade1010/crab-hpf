@@ -23,13 +23,13 @@ Socket::~Socket() {
 
 bool Socket::bind(const std::string &ip, int port) const {
     struct sockaddr_in sockaddr{};
-    memset(&sockaddr, 0, sizeof sockaddr);
+    memset(&sockaddr, 0, sizeof(sockaddr));
     sockaddr.sin_family = AF_INET;
     if (!ip.empty())
         sockaddr.sin_addr.s_addr = inet_addr(ip.c_str());
     else
         sockaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-    sockaddr.sin_port = htonl(port);
+    sockaddr.sin_port = htons(port);
     if (::bind(m_sock_fd, (struct sockaddr *) &sockaddr, sizeof sockaddr) < 0) {
         error("socket bind error:errno=%d errstr=%s", errno, strerror(errno));
         return false;
@@ -139,8 +139,8 @@ bool Socket::set_reuse_addr() const {
 }
 
 bool Socket::set_reuse_port() const {
-    int flags= 1;
-    if(setsockopt(m_sock_fd,SOL_SOCKET,SO_REUSEPORT,&flags, sizeof(flags))<0){
+    int flags = 1;
+    if (setsockopt(m_sock_fd, SOL_SOCKET, SO_REUSEPORT, &flags, sizeof(flags)) < 0) {
         error("socket set sock reuser port error: errno=%d errstr=%s", errno, strerror(errno));
         return false;
     }

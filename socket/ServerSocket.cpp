@@ -4,13 +4,17 @@
 #include <cstring>
 #include "ServerSocket.h"
 #include "../utility/logger/Logger.h"
+
 using namespace crab::socket;
 using namespace crab::logger;
-ServerSocket::ServerSocket() = default;
+
+ServerSocket::ServerSocket():Socket(){
+
+}
 
 ServerSocket::ServerSocket(const std::string &ip, int port) : Socket(ip, port) {
     m_sock_fd = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-    if (m_sock_fd<0){
+    if (m_sock_fd < 0) {
         error("create server socket error: errno=%d,errstr=%s", errno, strerror(errno));
         return;
     }

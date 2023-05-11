@@ -46,25 +46,36 @@ namespace crab {
             return "";
         }
         buf[len] = '\0';
+        std::string first_program_path;
         std::string program_path = buf;
         std::string::size_type pos = program_path.find_last_of('/');
         while (pos != std::string::npos) {
             program_path = program_path.substr(0, pos);
+            if (program_path.empty())
+                break;
             std::ifstream ifs(program_path + "/CMakeLists.txt");
             if (ifs.good()) {
                 // 找到了项目根目录
                 ifs.close();
                 break;
+            } else if (first_program_path.empty()) {
+                first_program_path = program_path;
             }
             ifs.close();
             pos = program_path.find_last_of('/');
         }
-        m_root_path = program_path;
+
+        if (program_path.empty() && first_program_path.empty())
+            throw std::runtime_error("can not find root path!");
+        else if (!program_path.empty())
+            m_root_path = program_path;
+        else
+            m_root_path = first_program_path;
         return m_root_path;
     }
 
     void System::core_dump() {
-        struct rlimit x;
+        struct rlimit x{};
         int ret = getrlimit(RLIMIT_CORE, &x);
         x.rlim_cur = x.rlim_max;
         ret = setrlimit(RLIMIT_CORE, &x);

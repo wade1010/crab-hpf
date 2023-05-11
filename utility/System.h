@@ -18,7 +18,7 @@ namespace crab {
 
         std::string get_root_path();
     private:
-        void core_dump();
+        static void core_dump();
     private:
         std::string m_root_path;
     };

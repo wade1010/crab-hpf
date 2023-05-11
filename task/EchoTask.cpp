@@ -21,20 +21,20 @@ namespace crab {
 
         void EchoTask::run() {
             debug("echo task run");
-            auto handler = Singleton<SocketHandler>::instance();
-            auto *socket = static_cast<Socket *>(m_data);
+            SocketHandler *handler = Singleton<SocketHandler>::instance();
+
+            auto socket = static_cast<Socket *>(m_data);
             char buf[1024];
-            memset(buf, 0, sizeof(buf));
-            int len = socket->recv(buf, sizeof(buf));
-            if (len>0){
-                debug("recv msg len: %d msg ,data: %s", len, buf);
+            memset(buf, 0, 1024);
+            int len = socket->recv(buf, 1024);
+            if (len > 0) {
+                debug("recv msg len: %d msg data: %s", len, buf);
                 socket->send(buf, len);
-                handler->detach(socket);
-            }else{
-                debug("echo task socket slosed by peer");
+                handler->attach(socket);
+            } else {
+                debug("echo task socket closed by peer");
                 handler->remove(socket);
             }
-            
         }
 
         void EchoTask::destroy() {

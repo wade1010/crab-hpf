@@ -54,7 +54,7 @@ void EventPoller::ctrl(int fd, void *ptr, __uint32_t events, int op) const {
     struct epoll_event ev{};
     ev.data.ptr = ptr;
     if (m_et)
-        ev.events = events|EPOLLET;
+        ev.events = events | EPOLLET;
     else
         ev.events = events;
     epoll_ctl(m_epfd, op, fd, &ev);
