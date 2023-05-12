@@ -18,6 +18,6 @@ add_executable(crab_hpf
         utility/ObjectPool.h socket/EventPoller.cpp socket/EventPoller.h socket/ClientSocket.cpp
         socket/ClientSocket.h utility/System.cpp utility/System.h task/TaskFactory.h task/EchoTask.cpp task/EchoTask.h
         engine/Workflow.cpp engine/Workflow.h engine/Work.cpp engine/Work.h engine/Plugin.h engine/Context.h
-        engine/PluginHelper.cpp engine/PluginHelper.h)
+        engine/PluginHelper.cpp engine/PluginHelper.h task/WorkTask.cpp task/WorkTask.h)
 
 target_link_libraries(crab_hpf ${CMAKE_THREAD_LIBS_INIT} ${DL_LIBRARY})
