@@ -3,7 +3,8 @@ import struct
 
 
 def send_data(client, data):
-    cmd = 1
+    #cmd对应配置文件workflow.xml里面的 <work name="2" switch="on"> 的name值
+    cmd = 2
     data_len = len(data)
     data = struct.pack(f'8sII{data_len}s', b'work', cmd, data_len, data.encode('utf-8'))
     client.send(data)  # 发送TCP数据

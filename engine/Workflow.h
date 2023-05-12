@@ -25,7 +25,7 @@ namespace crab {
             bool run(const std::string &work, const std::string &input, std::string &output);
 
         private:
-            bool load_plugin(Work *work, Element &element);
+            static bool load_plugin(Work *work, Element &element);
 
         private:
             std::map<std::string, Work *> m_works;

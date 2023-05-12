@@ -8,6 +8,7 @@
 #include "../thread/Task.h"
 #include "../socket/Socket.h"
 #include "EchoTask.h"
+#include "WorkTask.h"
 
 using namespace crab::thread;
 using namespace crab::socket;
@@ -17,7 +18,8 @@ namespace crab {
         class TaskFactory {
         public:
             static Task *create(Socket *socket) {
-                return new EchoTask(socket);
+                return new WorkTask(socket);
+//                return new EchoTask(socket);
             }
         };
     }

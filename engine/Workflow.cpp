@@ -44,17 +44,20 @@ namespace crab {
             auto it = m_works.find(work);
             if (it == m_works.end()) {
                 error("work: %s is not exist!", work.c_str());
+                output = "work name:" + work + " is not exist or switch is not on!";
                 return false;
             }
             if (!it->second->get_switch()) {
                 error("work: %s is switch off!", work.c_str());
+                output = "work name:" + work + ",switch is not on!";
                 return false;
             }
 
             Context ctx;
             ctx.ref<string>("input") = input;
             if (!it->second->run(ctx)) {
-                error("work: %s run error!", work.c_str());
+                error("work: %s run failed!", work.c_str());
+                output = "work name:" + work + " run failed!";
                 return false;
             }
             output = ctx.ref<string>("output");
